@@ -1,7 +1,35 @@
 #! /bin/bash
 
+export WHT="\033[0;37m"
+export BLK="\033[0;30m"
+export RED="\033[0;31m"
+export YEL="\033[0;33m"
+export BLU="\033[0;34m"
+export GRN="\033[0;32m"
+
+make re
+if [ $? != 0 ]
+	then
+		echo -e "$RED FAILED TO COMPILE FT_CONTAINER $WHT"
+		exit 1
+fi
+make stdlib
+if [ $? != 0 ]
+	then
+		echo -e "$RED FAILED TO COMPILE STD_CONTAINER $WHT"
+		exit 1
+fi
+
 ./ft_containers > out_ft
 ./std_containers > out_std
+
 echo -e "DIFF: FT_CONTAINERS -VS- STD_CONTAINERS"
-diff out_ft out_std
+diff -y -W 200 out_ft out_std
+
+echo -e "EXECUTION TIMES:"
+echo -e "\nft_containers"
+time ./ft_containers > out_ft
+echo -e "\nstd_containers"
+time ./std_containers > out_std
+
 rm out_ft out_std

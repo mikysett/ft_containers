@@ -9,7 +9,7 @@ GRN	= \033[0;32m
 
 NAME	=	ft_containers
 
-SRCS	:=	main.cpp 
+SRCS	:=	main.cpp
 
 DIR_S	=	
 
@@ -18,7 +18,8 @@ DIR_O	=	obj
 OBJS		:= $(SRCS:%.cpp=$(DIR_O)/%.o)
 
 # Using wildcards: $(shell find $(HEADERS) -name *.h)
-DEPS	=	ft_containers.hpp
+DEPS	=	ft_containers.hpp \
+			vector.hpp
 
 CC		=	clang++
 
