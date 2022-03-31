@@ -1,6 +1,8 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include "ft_type_traits.hpp"
+
 namespace ft
 {
 	template<class T, class Allocator = std::allocator<T> >
@@ -34,20 +36,12 @@ namespace ft
 			}
 		}
 
-		// TODO implement enable_if and is_integral to solve priority issues
-		// for constructors
-		
-		// template< class InputIt >
-		// vector( typename std::enable_if<
-		// 			!std::is_integral<InputIt>::value,
-		// 			InputIt
-		// 			>::type first,
-		// 		InputIt last,
-		// 	const Allocator& alloc = Allocator() )
-
-
 		template< class InputIt >
-		vector( InputIt first, InputIt last,
+		vector( typename ft::enable_if<
+			!ft::is_integral<InputIt>::value,
+			InputIt
+			>::type first,
+			InputIt last,
 			const Allocator& alloc = Allocator() )
 			: _size(last - first)
 			, _capacity(this->_size)
