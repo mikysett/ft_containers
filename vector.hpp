@@ -66,6 +66,10 @@ namespace ft
 			}
 		}
 
+		~vector() {
+			destroy_all();
+			_alloc.deallocate(_ptr, _capacity);
+		}
 
 		size_t size() const {
 			return (_size);
@@ -106,11 +110,37 @@ namespace ft
 			return (_ptr[pos]);
 		}
 
+		vector &operator=(const vector &other) {
+			if (this == &other) {
+				return (*this);
+			}
+			if (this->_capacity < other._capacity) {
+				this->~vector();
+				this->_alloc = other._alloc;
+				this->_capacity = other._size;
+				this->_ptr = this->_alloc.allocate(this->_capacity);
+			} else {
+				destroy_all();
+				this->_alloc = other._alloc;
+			}
+			this->_size = other._size;
+			for (size_t i = 0 ; i < this->_size ; i++) {
+				this->_alloc.construct(_ptr + i, other[i]);
+			}
+			return (*this);
+		}
+
 	private:
 		size_t _size;
 		size_t _capacity;
 		Allocator _alloc;
 		T* _ptr;
+
+		void destroy_all() {
+			for (size_t i = 0 ; i < this->_size ; i++) {
+				_alloc.destroy(_ptr + i);
+			}
+		}
 	};
 }
 
