@@ -44,9 +44,9 @@ namespace ft
 			InputIt last,
 			const Allocator& alloc = Allocator() )
 			: _size(last - first)
-			, _capacity(this->_size)
+			, _capacity(last - first)
 			, _alloc(alloc)
-			, _ptr(_alloc.allocate(this->_size))
+			, _ptr(_alloc.allocate(last - first))
 		{
 			InputIt curr_value = first;
 			for (size_t i = 0 ; i < this->_size ; i++) {

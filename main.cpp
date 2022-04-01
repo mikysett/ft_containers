@@ -9,7 +9,8 @@ int main(int argc, char **argv) {
 	return (0);
 }
 
-void print_info(ft::vector<int> vec) {
+template<class T>
+void print_info(ft::vector<T> vec) {
 	std::cout << "size    : " << vec.size() << std::endl;
 	std::cout << "capacity: " << vec.capacity() << std::endl;
 
@@ -24,27 +25,27 @@ void print_info(ft::vector<int> vec) {
 
 void test_constructors() {
 	std::cout << "----> constructors" << std::endl;
-	ft::vector<int> a_vec;
+	ft::vector<std::string> a_vec;
 	print_info(a_vec);
-	a_vec.push_back(10);
+	a_vec.push_back(std::string("10"));
 	print_info(a_vec);
-	a_vec.push_back(20);
+	a_vec.push_back(std::string("20"));
 	print_info(a_vec);
-	a_vec.push_back(11);
+	a_vec.push_back(std::string("11"));
 	print_info(a_vec);
-	a_vec.push_back(22);
+	a_vec.push_back(std::string("22"));
 	print_info(a_vec);
 
 
-	ft::vector<int> b_vec = a_vec;
+	ft::vector<std::string> b_vec = a_vec;
 	print_info(b_vec);
-	b_vec.push_back(33);
+	b_vec.push_back(std::string("33"));
 	std::cout << "Uncopied capacity: " << b_vec.capacity() << std::endl;
 	print_info(b_vec);
 	print_info(a_vec);
 
-	a_vec = ft::vector<int>(10, 42);
-	print_info(a_vec);
-	b_vec = ft::vector<int>(0, 20);
+	b_vec = ft::vector<std::string>(0, std::string("5"));
+	print_info(b_vec);
+	b_vec = ft::vector<std::string>(10, std::string("20"));
 	print_info(b_vec);
 }
