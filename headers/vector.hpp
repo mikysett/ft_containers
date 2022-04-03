@@ -1,8 +1,8 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-// # include <iterator>
-# include "iterator.hpp"
+# include <iterator>
+// # include "iterator.hpp"
 # include "type_traits.hpp"
 
 namespace ft
@@ -10,21 +10,20 @@ namespace ft
 	template<class T, class Allocator = std::allocator<T> >
 	class vector
 	{
-	typedef T value_type;
-	typedef Allocator allocator_type;                                 // Alloc
-	typedef typename allocator_type::const_reference const_reference; // const T&
-	typedef typename allocator_type::reference reference;             // T&
-	typedef typename allocator_type::const_pointer const_pointer;     // const T*
-	typedef typename allocator_type::pointer pointer;                 // T*
-	typedef typename allocator_type::difference_type difference_type; // std::ptrdiff_t
-	typedef typename allocator_type::size_type size_type;             // std::size_t
-	typedef ft::random_access_iterator<const value_type> const_iterator;
-	typedef ft::random_access_iterator<value_type> iterator;
-	typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-	typedef ft::reverse_iterator<iterator> reverse_iterator;
-
-
 	public:
+		typedef T value_type;
+		typedef Allocator allocator_type;                                 // Alloc
+		typedef typename allocator_type::const_reference const_reference; // const T&
+		typedef typename allocator_type::reference reference;             // T&
+		typedef typename allocator_type::const_pointer const_pointer;     // const T*
+		typedef typename allocator_type::pointer pointer;                 // T*
+		typedef typename allocator_type::difference_type difference_type; // std::ptrdiff_t
+		typedef typename allocator_type::size_type size_type;             // std::size_t
+		typedef ft::random_access_iterator<const value_type> const_iterator;
+		typedef ft::random_access_iterator<value_type> iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator> reverse_iterator;
+
 		vector()
 			: _size(0)
 			, _capacity(0)

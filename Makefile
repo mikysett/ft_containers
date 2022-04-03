@@ -9,26 +9,35 @@ GRN	= \033[0;32m
 
 NAME	=	ft_containers
 
-SRCS	:=	main.cpp
+SRCS	:=	src/main.cpp \
+			src/test_utility.cpp \
+			src/test_vector.cpp \
 
-DIR_S	=	
+HEADERS	=	headers
+
+DIR_S	=	src
 
 DIR_O	=	obj
 
 OBJS		:= $(SRCS:%.cpp=$(DIR_O)/%.o)
 
+SUB_DIR_O := $(shell find $(DIR_S) -type d)
+SUB_DIR_O := $(SUB_DIR_O:%=$(DIR_O)/%)
+
 # Using wildcards: $(shell find $(HEADERS) -name *.h)
-DEPS	=	ft_containers.hpp \
-			vector.hpp
+DEPS	=	$(HEADERS)/ft_containers.hpp \
+			$(HEADERS)/vector.hpp
 
 CC		=	clang++
 
-CFLAGS	=	-Wall -Wextra -std=c++98
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98
+INCLUDES	= -I $(HEADERS)
 
 RM		=	rm -f
 
 $(DIR_O)/%.o: %.cpp
 			@mkdir -p $(DIR_O)
+			@mkdir -p $(SUB_DIR_O)
 			$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 $(NAME):	$(DEPS) $(OBJS)
@@ -43,18 +52,20 @@ clean:
 
 fclean:		clean
 			$(RM) $(NAME)
-			$(RM) -d $(DIR_O)
+			$(RM) -drf $(DIR_O)
 			printf "$(WHT)[$(YEL)$(NAME) BINARIES REMOVED$(WHT)]\n"
 
 re:			fclean all
 
 stdlib:		INCLUDES += -DSTDLIB
 stdlib:		NAME = std_containers
+stdlib:		CFLAGS = -Wall -Wextra -Werror -std=c++11
 stdlib:		clean
 stdlib:		all
 
 debug:		INCLUDES += -DDEBUG_MODE
-debug:		CFLAGS = -Wall -Wextra -std=c++98 -g -fsanitize=address
+debug:		CFLAGS = -Wall -Wextra -g -fsanitize=address
+# debug:		CFLAGS = -Wall -Wextra -std=c++98 -g -fsanitize=address
 debug:		clean
 debug:		all
 
