@@ -74,6 +74,12 @@ namespace ft {
 			return (lhs.second >= rhs.second);
 		return (lhs.first >= rhs.first);
 	}
+
+	template< class T1, class T2 >
+	pair<T1,T2> make_pair( T1 t, T2 u )
+	{
+		return (pair(t, u));
+	}
 }
 
 #endif

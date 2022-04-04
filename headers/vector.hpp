@@ -1,8 +1,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <iterator>
-// # include "iterator.hpp"
+# include "iterator.hpp"
 # include "type_traits.hpp"
 
 namespace ft
@@ -52,7 +51,6 @@ namespace ft
 		}
 
 		template< class InputIt >
-		// TODO pass to ft::
 		vector( typename ft::enable_if<
 			!ft::is_integral<InputIt>::value,
 			InputIt
@@ -60,9 +58,9 @@ namespace ft
 			InputIt last,
 			const allocator_type& alloc = allocator_type() )
 			: _size(last - first)
-			, _capacity(last - first)
+			, _capacity(this->_size)
 			, _alloc(alloc)
-			, _ptr(_alloc.allocate(last - first))
+			, _ptr(_alloc.allocate(this->_size))
 		{
 			InputIt curr_value = first;
 			for (size_type i = 0 ; i < this->_size ; i++) {

@@ -14,9 +14,9 @@ void test_utility() {
 	ft::pair<char, int> p3(p2);
 	print_pair(p3);
 
-	ft::pair<int, int> p4(20, 42);
-	ft::pair<int, int> p5(21, 45);
-	ft::pair<int, int> p6(10, 42);
+	ft::pair<int, int> p4 = ft::make_pair(20, 42);
+	ft::pair<int, int> p5 = ft::make_pair(21, 45);
+	ft::pair<int, int> p6 = ft::make_pair(10, 42);
 
 	print_bool(p1 == p1);
 	print_bool(p4 == p5);
