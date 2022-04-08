@@ -1,6 +1,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+#include <stdexcept>
 # include "iterator.hpp"
 # include "type_traits.hpp"
 
@@ -104,9 +105,8 @@ namespace ft
 		void reserve( size_type new_cap ) {
 			if (new_cap < _capacity)
 				return;
-			// TODO implement error throw
 			if (new_cap > max_size()) {
-				return;
+				throw std::length_error	("vector::reserve");
 			}
 			pointer new_ptr = _alloc.allocate(new_cap);
 			for (size_type i = 0 ; i < _size ; i++) {

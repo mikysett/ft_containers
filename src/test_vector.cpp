@@ -4,11 +4,13 @@
 #include "vector.hpp"
 
 void test_constructors();
+void test_reserve();
 template<class T>
 void print_info(ft::vector<T>);
 
 void test_vector() {
 	test_constructors();
+	test_reserve();
 }
 
 void test_constructors() {
@@ -60,6 +62,27 @@ void test_constructors() {
  
     if (empty.begin() == empty.end())
         std::cout << "vector 'empty' is indeed empty.\n";
+}
+
+void test_reserve() {
+	std::cout << "reserve()" << std::endl;
+
+	ft::vector<int> v1(10, 20);
+	size_t max_size = (size_t)-1;
+
+	try {
+		v1.reserve(max_size);
+	} catch(std::exception& e) {
+		std::cout << "exception thrown because we tried to allocate more than allowed:" << std::endl;
+		std::cout << e.what() << std::endl;
+	}
+	try {
+		v1.reserve(v1.max_size());
+	} catch(std::exception& e) {
+		std::cout << "exception thrown because we tried to allocate more than allowed:" << std::endl;
+		std::cout << e.what() << std::endl;
+	}
+	print_info(v1);
 }
 
 template<class T>
