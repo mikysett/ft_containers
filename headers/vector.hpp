@@ -1,7 +1,9 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include <stdexcept>
+# include <stdexcept>
+# include <sstream>
+
 # include "iterator.hpp"
 # include "type_traits.hpp"
 
@@ -86,12 +88,45 @@ namespace ft
 			_alloc.deallocate(_ptr, _capacity);
 		}
 
+		void assign( size_type count, const T& value ) {
+			this->~vector();
+			_size = count;
+			_capacity = count;
+			_ptr = _alloc.allocate(count);
+
+			for (size_type i = 0 ; i < this->_size ; i++) {
+				_alloc.construct(_ptr + i, value);
+			}
+		}
+
+		template< class InputIt >
+		void assign( typename ft::enable_if<
+			!ft::is_integral<InputIt>::value,
+			InputIt
+			>::type first,
+			InputIt last)
+		{
+			this->~vector();
+			_size = last - first;
+			_capacity = _size;
+			_ptr = _alloc.allocate(_size);
+			InputIt curr_value = first;
+			for (size_type i = 0 ; i < _size ; i++) {
+				_alloc.construct(_ptr + i, curr_value);
+				curr_value++;
+			}
+		}
+
 		bool empty() const {
 			if (!_size) {
 				return (true);
 			} else {
 				return (false);
 			}
+		}
+
+		allocator_type get_allocator() const {
+			return (_alloc);
 		}
 
 		size_type size() const {
@@ -153,28 +188,69 @@ namespace ft
 			return (const_reverse_iterator(begin()));
 		}
 
-		void push_back( const value_type& value ) {
-			if (_size == _capacity) {
-				if (_size == 0) {
-					_capacity = 1;
-				}
-				else {
-					_capacity *= 2;
-				}
-				pointer new_ptr = _alloc.allocate(_capacity);
-				if (_size != 0)
-				{
-					for (size_type i = 0 ; i < _size ; i++) {
-						_alloc.construct(new_ptr + i, _ptr[i]);
-					}
-					_alloc.deallocate(_ptr, _size);
-				}
-				_ptr = new_ptr;
-			}
-			_alloc.construct(_ptr + _size, value);
-			_size++;
+		reference front() {
+			return (*_ptr);
 		}
 
+		const_reference front() const {
+			return (*_ptr);
+		}
+
+		reference back() {
+			return (*(_ptr + _size - 1));
+		}
+
+		const_reference back() const {
+			return (*(_ptr + _size - 1));
+		}
+
+		T* data() {
+			return (_ptr);
+		}
+
+		const T* data() const {
+			return (_ptr);
+		}
+
+		reference at( size_type pos ) {
+			if (pos >= _size)
+			{
+				std::string pos_str;
+				std::string size_str;
+				std::string msg;
+				std::stringstream ss_pos;
+				std::stringstream ss_size;
+				ss_pos << pos;
+				ss_pos >> pos_str;
+				ss_size << _size;
+				ss_size >> size_str;
+				msg = "vector::_M_range_check: __n (which is " + pos_str + ") >= this->size() (which is " + size_str + ")";
+				throw std::out_of_range(msg);
+			}
+			else {
+				return (*(_ptr + pos));
+			}
+		}
+
+		const_reference at( size_type pos ) const {
+			if (pos >= _size)
+			{
+				std::string pos_str;
+				std::string size_str;
+				std::string msg;
+				std::stringstream ss_pos;
+				std::stringstream ss_size;
+				ss_pos << pos;
+				ss_pos >> pos_str;
+				ss_size << _size;
+				ss_size >> size_str;
+				msg = "vector::_M_range_check: __n (which is " + pos_str + ") >= this->size() (which is " + size_str + ")";
+				throw std::out_of_range(msg);
+			}
+			else {
+				return (*(_ptr + pos));
+			}
+		}
 
 		value_type& operator[]( size_type pos ) {
 			return (_ptr[pos]);
@@ -204,10 +280,49 @@ namespace ft
 			return (*this);
 		}
 
+		void clear() {
+
+		}
+
+		iterator insert( iterator pos, const T& value ) {
+			return (pos);
+		}
+
+		void insert( iterator pos, size_type count, const T& value ) {
+
+		}
+
+		template< class InputIt >
+		void insert( iterator pos, InputIt first, InputIt last ) {
+			
+		}
+
+		void push_back( const value_type& value ) {
+			if (_size == _capacity) {
+				if (_size == 0) {
+					_capacity = 1;
+				}
+				else {
+					_capacity *= 2;
+				}
+				pointer new_ptr = _alloc.allocate(_capacity);
+				if (_size != 0)
+				{
+					for (size_type i = 0 ; i < _size ; i++) {
+						_alloc.construct(new_ptr + i, _ptr[i]);
+					}
+					_alloc.deallocate(_ptr, _size);
+				}
+				_ptr = new_ptr;
+			}
+			_alloc.construct(_ptr + _size, value);
+			_size++;
+		}
+
 	private:
 		size_type _size;
 		size_type _capacity;
-		Allocator _alloc;
+		allocator_type _alloc;
 		pointer _ptr;
 
 		void destroy_all() {

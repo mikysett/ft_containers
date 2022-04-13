@@ -30,7 +30,7 @@ DEPS	=	$(HEADERS)/ft_containers.hpp \
 
 CC		=	clang++
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++98
+CFLAGS	=	-Wall -Wextra -std=c++98
 INCLUDES	= -I $(HEADERS)
 
 RM		=	rm -f
@@ -59,7 +59,7 @@ re:			fclean all
 
 stdlib:		INCLUDES += -DSTDLIB
 stdlib:		NAME = std_containers
-stdlib:		CFLAGS = -Wall -Wextra -Werror -std=c++11
+stdlib:		CFLAGS = -Wall -Wextra -std=c++11
 stdlib:		clean
 stdlib:		all
 

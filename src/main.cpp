@@ -1,10 +1,10 @@
 #include "ft_containers.hpp"
 
 int main(void) {
-	std::cout << "--> test vector" << std::endl;
-	test_vector();
-	std::cout << "--> test utility" << std::endl;
+	std::cout << YEL << " --> test utility" << WHT << std::endl;
 	test_utility();
+	std::cout << YEL << " --> test vector" << WHT << std::endl;
+	test_vector();
 	
 	return (0);
 }
