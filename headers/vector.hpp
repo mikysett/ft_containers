@@ -281,40 +281,60 @@ namespace ft
 		}
 
 		void clear() {
-
+			destroy_all();
+			_size = 0;
 		}
 
 		iterator insert( iterator pos, const T& value ) {
+			T buf;
+			size_type curr_pos = pos - begin();
+
+			auto_expand(_size + 1);
+			_size++;
+			for (size_type i = _size - 1 ; i != curr_pos ; i--) {
+				buf = *(_ptr + i - 1);
+				_alloc.destroy(_ptr + i - 1);
+				_alloc.construct(_ptr + i, buf);
+			}
+			_alloc.destroy(_ptr + curr_pos);
+			_alloc.construct(_ptr + curr_pos, value);
 			return (pos);
 		}
 
 		void insert( iterator pos, size_type count, const T& value ) {
+			T buf;
+			size_type curr_pos = pos - begin();
 
+			auto_expand(_size + count);
+
+			for (size_type i = _size - 1 ; i >= curr_pos ; i--) {
+				buf = *(_ptr + i);
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i + count, buf);
+				if (i == 0)
+					break;
+			}
+			_size += count;
+			for (size_type i = curr_pos ; count > 0 ; i++) {
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i, value);
+				count--;
+			}
 		}
 
 		template< class InputIt >
-		void insert( iterator pos, InputIt first, InputIt last ) {
+		void insert( iterator pos,
+			typename ft::enable_if<
+			!ft::is_integral<InputIt>::value,
+			InputIt
+			>::type first,
+			InputIt last ) {
+			std::cout << "third insert called" << std::endl;
 			
 		}
 
 		void push_back( const value_type& value ) {
-			if (_size == _capacity) {
-				if (_size == 0) {
-					_capacity = 1;
-				}
-				else {
-					_capacity *= 2;
-				}
-				pointer new_ptr = _alloc.allocate(_capacity);
-				if (_size != 0)
-				{
-					for (size_type i = 0 ; i < _size ; i++) {
-						_alloc.construct(new_ptr + i, _ptr[i]);
-					}
-					_alloc.deallocate(_ptr, _size);
-				}
-				_ptr = new_ptr;
-			}
+			auto_expand(_size + 1);
 			_alloc.construct(_ptr + _size, value);
 			_size++;
 		}
@@ -328,6 +348,21 @@ namespace ft
 		void destroy_all() {
 			for (size_type i = 0 ; i < this->_size ; i++) {
 				_alloc.destroy(_ptr + i);
+			}
+		}
+
+		void auto_expand(size_type new_size) {
+			if (new_size > _capacity)
+			{
+				if (_capacity == 0)
+					reserve(new_size);
+				else if (_capacity * 2 <= max_size()
+					&& _capacity * 2 >= new_size)
+					reserve(_capacity * 2);
+				else if (new_size <= max_size())
+					reserve(new_size);
+				else
+					reserve(max_size());
 			}
 		}
 	};

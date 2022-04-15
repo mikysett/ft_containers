@@ -17,7 +17,7 @@ void print_info(ft::vector<T>);
 
 void test_vector() {
 	test_constructors();
-	test_reserve();
+	// test_reserve();
 	test_front_back();
 	test_data();
 	test_assign();
@@ -29,10 +29,21 @@ void test_vector() {
 void test_insert() {
 	std::cout << "----> insert()" << std::endl;
 	ft::vector<int> v1(11, 20);
+	print_info(v1);
 	v1.insert(v1.begin(), 42);
 	print_info(v1);
 	v1.insert(v1.end(), 42);
 	print_info(v1);
+
+	ft::vector<int> v2;
+	v2.insert(v2.begin(), 10);
+	print_info(v2);
+
+	v2.insert(v2.begin(), 11, 2);
+	print_info(v2);
+	v2.insert(v2.end(), 3, 7);
+	print_info(v2);
+	v1.insert(v1.begin(), 6, 6);
 }
 
 void test_clear() {
