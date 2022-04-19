@@ -12,9 +12,11 @@ void test_at();
 void test_clear();
 void test_insert();
 void test_erase();
+void test_pop_back();
+void test_resize();
 
 template<class T>
-void print_info(ft::vector<T>);
+void print_info(ft::vector<T> &);
 
 void test_vector() {
 	test_constructors();
@@ -26,6 +28,32 @@ void test_vector() {
 	test_clear();
 	test_insert();
 	test_erase();
+	test_pop_back();
+	test_resize();
+}
+
+void test_resize() {
+	std::cout << "----> resize()" << std::endl;
+	ft::vector<int> v1(1, 20);
+	v1.resize(5, 87);
+	print_info(v1);
+	v1.resize(8, 91);
+	print_info(v1);
+	v1.resize(2, 10);
+	print_info(v1);
+}
+
+void test_pop_back() {
+	std::cout << "----> pop_back()" << std::endl;
+	ft::vector<int> v1(1, 20);
+	v1.push_back(42);
+	v1.push_back(41);
+	v1.push_back(32);
+	v1.push_back(12);
+	while (v1.size()) {
+		v1.pop_back();
+		print_info(v1);
+	}
 }
 
 void test_erase() {
@@ -237,7 +265,7 @@ void test_reserve() {
 }
 
 template<class T>
-void print_info(ft::vector<T> vec) {
+void print_info(ft::vector<T> &vec) {
 	std::cout << "size    : " << vec.size() << std::endl;
 	std::cout << "capacity: " << vec.capacity() << std::endl;
 

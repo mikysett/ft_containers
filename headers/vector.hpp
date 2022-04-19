@@ -385,6 +385,27 @@ namespace ft
 			_size++;
 		}
 
+		void pop_back() {
+			erase(end() - 1);
+		}
+
+		void resize( size_type count, T value = T() ) {
+			if (count > _capacity) {
+				auto_expand(count);
+			}
+			if (_size > count) {
+				erase(begin() + count, end());
+			}
+			else {
+				for (size_type curr_pos = _size ;
+					curr_pos < count ;
+					curr_pos++) {
+					_alloc.construct(_ptr + curr_pos, value);
+				}
+			}
+			_size = count;
+		}
+
 	private:
 		size_type _size;
 		size_type _capacity;
