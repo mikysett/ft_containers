@@ -112,7 +112,7 @@ namespace ft
 			_ptr = _alloc.allocate(_size);
 			InputIt curr_value = first;
 			for (size_type i = 0 ; i < _size ; i++) {
-				_alloc.construct(_ptr + i, curr_value);
+				_alloc.construct(_ptr + i, *curr_value);
 				curr_value++;
 			}
 		}
@@ -329,8 +329,27 @@ namespace ft
 			InputIt
 			>::type first,
 			InputIt last ) {
-			std::cout << "third insert called" << std::endl;
-			
+			T buf;
+			size_type curr_pos = pos - begin();
+			size_type count = last - first;
+
+			auto_expand(_size + count);
+
+			for (size_type i = _size - 1 ; i >= curr_pos ; i--) {
+				buf = *(_ptr + i);
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i + count, buf);
+				if (i == 0)
+					break;
+			}
+			_size += count;
+			InputIt curr_value = first;
+			for (size_type i = curr_pos ; count > 0 ; i++) {
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i, *curr_value);
+				curr_value++;
+				count--;
+			}
 		}
 
 		void push_back( const value_type& value ) {
