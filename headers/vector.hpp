@@ -352,6 +352,33 @@ namespace ft
 			}
 		}
 
+		iterator erase( iterator pos ) {
+			size_type curr_pos = pos - begin();
+			_alloc.destroy(_ptr + curr_pos);
+			for (curr_pos += 1 ; curr_pos < _size ; curr_pos++) {
+				_alloc.construct(_ptr + curr_pos - 1, *(_ptr + curr_pos));
+				_alloc.destroy(_ptr + curr_pos);
+			}
+			_size--;
+			return (pos);
+		}
+
+		iterator erase( iterator first, iterator last ) {
+			size_type curr_pos = first - begin();
+			size_type nb_to_erase = last - first;
+
+			for (size_type i = 0 ; i < nb_to_erase ; i++) {
+				_alloc.destroy(_ptr + curr_pos);
+				curr_pos++;
+			}
+			for ( ; curr_pos < _size ; curr_pos++) {
+				_alloc.construct(_ptr + curr_pos - nb_to_erase, *(_ptr + curr_pos));
+				_alloc.destroy(_ptr + curr_pos);
+			}
+			_size -= nb_to_erase;
+			return (first);
+		}
+
 		void push_back( const value_type& value ) {
 			auto_expand(_size + 1);
 			_alloc.construct(_ptr + _size, value);

@@ -23,13 +23,13 @@ fi
 ./ft_containers > out_ft
 ./std_containers > out_std
 
-echo -e "DIFF: FT_CONTAINERS -VS- STD_CONTAINERS"
+echo -e "\n $YEL DIFF: FT_CONTAINERS -VS- STD_CONTAINERS $WHT"
 diff -y -W 200 out_ft out_std
 
-echo -e "EXECUTION TIMES:"
-echo -e "\nft_containers"
+echo -e "\n $YEL EXECUTION TIMES: $WHT"
+echo -e "\n $BLU ft_containers $WHT"
 time ./ft_containers > out_ft
-echo -e "\nstd_containers"
+echo -e "\n $BLU std_containers $WHT"
 time ./std_containers > out_std
 
 rm out_ft out_std

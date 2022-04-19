@@ -11,19 +11,59 @@ void test_assign();
 void test_at();
 void test_clear();
 void test_insert();
+void test_erase();
 
 template<class T>
 void print_info(ft::vector<T>);
 
 void test_vector() {
 	test_constructors();
-	test_reserve();
+ 	test_reserve();
 	test_front_back();
 	test_data();
 	test_assign();
 	test_at();
 	test_clear();
 	test_insert();
+	test_erase();
+}
+
+void test_erase() {
+	std::cout << "----> erase()" << std::endl;
+	ft::vector<int> v1(1, 20);
+	v1.push_back(42);
+	v1.push_back(41);
+	v1.push_back(32);
+	v1.push_back(22);
+	v1.push_back(12);
+	v1.push_back(41);
+	v1.push_back(32);
+	v1.push_back(22);
+	v1.push_back(12);
+	#ifdef STDLIB
+		auto res = v1.begin();
+	# else
+		ft::random_access_iterator<int> res;
+	#endif
+	print_info(v1);
+	res = v1.erase(v1.end() - 1);
+	std::cout << *res << std::endl;
+	print_info(v1);
+	res = v1.erase(v1.begin());
+	std::cout << *res << std::endl;
+	print_info(v1);
+	res = v1.erase(v1.begin(), v1.begin());
+	std::cout << *res << std::endl;
+	print_info(v1);
+	res = v1.erase(v1.end() - 1, v1.end());
+	std::cout << *res << std::endl;
+	print_info(v1);
+	res = v1.erase(v1.begin() + 2, v1.begin() + 5);
+	std::cout << *res << std::endl;
+	print_info(v1);
+	res = v1.erase(v1.begin(), v1.end());
+	std::cout << *res << std::endl;
+	print_info(v1);
 }
 
 void test_insert() {
