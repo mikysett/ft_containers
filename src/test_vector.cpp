@@ -14,6 +14,7 @@ void test_insert();
 void test_erase();
 void test_pop_back();
 void test_resize();
+void test_swap();
 
 template<class T>
 void print_info(ft::vector<T> &);
@@ -30,6 +31,34 @@ void test_vector() {
 	test_erase();
 	test_pop_back();
 	test_resize();
+	test_swap();
+}
+
+void test_swap() {
+	std::cout << "----> swap()" << std::endl;
+	ft::vector<int> v1(5, 32);
+	ft::vector<int> v2(5, 48);
+
+	#ifdef STDLIB
+		auto it1 = v1.begin();
+		auto it2 = v2.begin();
+	# else
+		ft::random_access_iterator<int> it1 = v1.begin();
+		ft::random_access_iterator<int> it2 = v2.begin();
+	#endif
+
+	int& ref1 = v1.front();
+    int& ref2 = v2.front();
+
+	print_info(v1);
+	print_info(v2);
+	std::cout << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
+
+	v1.swap(v2);
+
+	print_info(v1);
+	print_info(v2);
+	std::cout << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
 }
 
 void test_resize() {

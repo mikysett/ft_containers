@@ -406,6 +406,23 @@ namespace ft
 			_size = count;
 		}
 
+		void swap( vector& other ) {
+			size_type tmp_size = this->_size;
+			size_type tmp_capacity = this->_capacity;
+			allocator_type tmp_alloc = this->_alloc;
+			pointer tmp_ptr = this->_ptr;
+
+			_size = other._size;
+			_capacity = other._capacity;
+			_alloc = other._alloc;
+			_ptr = other._ptr;
+
+			other._size = tmp_size;
+			other._capacity = tmp_capacity;
+			other._alloc = tmp_alloc;
+			other._ptr = tmp_ptr;
+		}
+
 	private:
 		size_type _size;
 		size_type _capacity;
