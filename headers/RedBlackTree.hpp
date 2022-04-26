@@ -6,6 +6,8 @@
 
 # include "iterator.hpp"
 # include "type_traits.hpp"
+# include "RBTiterator.hpp"
+# include "RBTreverse_iterator.hpp"
 
 namespace ft {
 	template <bool Cond, class IsTrue, class IsFalse>
@@ -97,7 +99,6 @@ namespace ft {
 		typedef RBTiterator<value_type, true> const_iterator;
 		typedef RBTreverse_iterator<iterator> reverse_iterator;
 		typedef RBTreverse_iterator<const_iterator> const_reverse_iterator;
-
 
 		private:
 	};

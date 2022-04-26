@@ -1,0 +1,101 @@
+#ifndef RBTITERATOR_HPP
+# define RBTITERATOR_HPP
+
+namespace ft
+{
+    template <class T, bool is_const = false>
+    class RBTiterator
+    {
+	    public:
+        typedef T value_type;
+        typedef typename SelectType<is_const, T const &, T &>::type reference;
+        typedef typename SelectType<is_const, T const *, T *>::type pointer;
+        typedef std::ptrdiff_t difference_type;
+        typedef std::bidirectional_iterator_tag iterator_category;
+        typedef RBTnode<T> *node_pointer;
+
+        RBTiterator() : _node(NULL) {}
+
+        RBTiterator(const RBTiterator &other)
+        {
+            *this = other;
+        }
+
+        RBTiterator(node_pointer ptr) : _node(ptr) {}
+
+        ~RBTiterator() {}
+
+        operator RBTiterator<value_type, true>()
+        {
+            return (_node);
+        }
+
+        RBTiterator &operator=(const RBTiterator &rhs)
+        {
+            if (this == &rhs)
+            {
+                return (*this);
+            }
+
+            _node = rhs._node;
+            return (*this);
+        }
+
+        bool operator==(const RBTiterator &rhs) const
+        {
+            return (_node == rhs._node);
+        }
+
+        bool operator!=(const RBTiterator &rhs) const
+        {
+            return (!(*this == rhs));
+        }
+
+        reference operator*() const
+        {
+            return (*_node->data);
+        }
+
+        pointer operator->() const
+        {
+            return (_node->data);
+        }
+
+        RBTiterator &operator++()
+        {
+            _node = RedBlackTree<value_type>::successor(_node);
+            return (*this);
+        }
+
+        RBTiterator operator++(int)
+        {
+            RBTiterator old = *this;
+			_node = RedBlackTree<value_type>::successor(_node);
+            return (old);
+        }
+
+        RBTiterator &operator--()
+        {
+            _node = RedBlackTree<value_type>::predecessor(_node);
+            return (*this);
+        }
+
+        // Postfix decrement
+        RBTiterator operator--(int)
+        {
+            RBTiterator old = *this;
+			_node = RedBlackTree<value_type>::predecessor(_node);
+            return (old);
+        }
+
+        node_pointer getNode() const
+        {
+            return (_node);
+        }
+
+    private:
+        node_pointer _node;
+    };
+}
+
+#endif
