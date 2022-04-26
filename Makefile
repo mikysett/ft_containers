@@ -12,6 +12,7 @@ NAME	=	ft_containers
 SRCS	:=	src/main.cpp \
 			src/test_utility.cpp \
 			src/test_vector.cpp \
+			src/test_map.cpp \
 
 HEADERS	=	headers
 
@@ -26,7 +27,8 @@ SUB_DIR_O := $(SUB_DIR_O:%=$(DIR_O)/%)
 
 # Using wildcards: $(shell find $(HEADERS) -name *.h)
 DEPS	=	$(HEADERS)/ft_containers.hpp \
-			$(HEADERS)/vector.hpp
+			$(HEADERS)/vector.hpp \
+			$(HEADERS)/map.hpp
 
 CC		=	clang++
 

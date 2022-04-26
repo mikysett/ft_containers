@@ -13,7 +13,8 @@
 # define PURPLE	"\033[0;35m"
 # define CYAN	"\033[0;36m"
 
-void test_vector();
 void test_utility();
+void test_vector();
+void test_map();
 
 #endif
