@@ -17,6 +17,7 @@
 	#include "vector.hpp"
 	#include "utility.hpp"
 	#include "type_traits.hpp"
+	#include "RedBlackTree.hpp"
 #endif
 
 

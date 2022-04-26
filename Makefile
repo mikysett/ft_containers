@@ -28,7 +28,8 @@ SUB_DIR_O := $(SUB_DIR_O:%=$(DIR_O)/%)
 # Using wildcards: $(shell find $(HEADERS) -name *.h)
 DEPS	=	$(HEADERS)/ft_containers.hpp \
 			$(HEADERS)/vector.hpp \
-			$(HEADERS)/map.hpp
+			$(HEADERS)/map.hpp \
+			$(HEADERS)/RedBlackTree.hpp \
 
 CC		=	clang++
 
