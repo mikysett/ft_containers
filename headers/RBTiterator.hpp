@@ -80,7 +80,6 @@ namespace ft
             return (*this);
         }
 
-        // Postfix decrement
         RBTiterator operator--(int)
         {
             RBTiterator old = *this;
