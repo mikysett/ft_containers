@@ -1,8 +1,36 @@
 #ifndef RBTITERATOR_HPP
 # define RBTITERATOR_HPP
 
+
 namespace ft
 {
+    template<
+		class T,
+		class Compare = std::less<T>,
+		class Allocator = std::allocator<T> >
+	class RedBlackTree;
+
+    template <bool Cond, class IsTrue, class IsFalse>
+    struct SelectType;
+
+    template <class IsTrue, class IsFalse>
+    struct SelectType<true, IsTrue, IsFalse>
+    {
+        typedef IsTrue type;
+    };
+
+    template <class IsTrue, class IsFalse>
+    struct SelectType<false, IsTrue, IsFalse>
+    {
+        typedef IsFalse type;
+    };
+
+    template <class T, bool is_const>
+    class RBTiterator;
+
+    template <class Iterator>
+    class RBTreverse_iterator;
+
     template <class T, bool is_const = false>
     class RBTiterator
     {
@@ -63,20 +91,20 @@ namespace ft
 
         RBTiterator &operator++()
         {
-            _node = RedBlackTree<value_type>::successor(_node);
+            _node = ft::RedBlackTree<value_type>::successor(_node);
             return (*this);
         }
 
         RBTiterator operator++(int)
         {
             RBTiterator old = *this;
-			_node = RedBlackTree<value_type>::successor(_node);
+			_node = ft::RedBlackTree<value_type>::successor(_node);
             return (old);
         }
 
         RBTiterator &operator--()
         {
-            _node = RedBlackTree<value_type>::predecessor(_node);
+            _node = ft::RedBlackTree<value_type>::predecessor(_node);
             return (*this);
         }
 
@@ -84,7 +112,7 @@ namespace ft
         RBTiterator operator--(int)
         {
             RBTiterator old = *this;
-			_node = RedBlackTree<value_type>::predecessor(_node);
+			_node = ft::RedBlackTree<value_type>::predecessor(_node);
             return (old);
         }
 

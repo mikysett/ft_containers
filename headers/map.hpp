@@ -6,6 +6,7 @@
 
 # include "iterator.hpp"
 # include "type_traits.hpp"
+# include "RedBlackTree.hpp"
 
 namespace ft {
 	template<
@@ -31,8 +32,9 @@ namespace ft {
 			
 
 		private:
-
-
+            ft::RedBlackTree<value_type>    _bst;
+            key_compare                     _comp;
+            allocator_type                  _alloc;
 	};
 }
 
