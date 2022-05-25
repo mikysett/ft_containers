@@ -6,6 +6,7 @@
 
 # include "iterator.hpp"
 # include "type_traits.hpp"
+# include "utility.hpp"
 # include "RedBlackTree.hpp"
 
 namespace ft {
@@ -16,6 +17,12 @@ namespace ft {
 		class Allocator = std::allocator<std::pair<const Key, T> >
 	> class map
 	{
+		public:
+			class value_compare;
+		
+		private:
+			typedef RedBlackTree<ft::pair<const Key, T>, value_compare, Allocator> RedBlackTree;
+		
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
@@ -30,6 +37,13 @@ namespace ft {
 			// typedef typename std::LegacyBidirectionalIterator<value_type> iterator;
 			// typedef typename std::LegacyBidirectionalIterator<const value_type> const_iterator;
 			
+			// Constructors
+			explicit map( const key_compare& comp,
+				const allocator_type& alloc = allocator_type() )
+				: _bst(RedBlackTree(value_compare(comp), alloc))
+				, _comp(comp)
+				, _alloc(alloc)
+			{}
 
 		private:
             ft::RedBlackTree<value_type>    _bst;
