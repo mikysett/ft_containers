@@ -32,6 +32,7 @@ DEPS	=	$(HEADERS)/ft_containers.hpp \
 			$(HEADERS)/RedBlackTree.hpp \
 			$(HEADERS)/RBTiterator.hpp \
 			$(HEADERS)/RBTreverse_iterator.hpp \
+			$(HEADERS)/RBTnode.hpp \
 
 CC		=	clang++
 
