@@ -1,5 +1,5 @@
-#ifndef RBTITERATOR_HPP
-# define RBTITERATOR_HPP
+#ifndef BSTITERATOR_HPP
+# define BSTITERATOR_HPP
 
 namespace ft
 {
@@ -7,7 +7,7 @@ namespace ft
 		class T,
 		class Compare = std::less<T>,
 		class Allocator = std::allocator<T> >
-	class RedBlackTree;
+	class BinarySearchTree;
 
     template <bool Cond, class IsTrue, class IsFalse>
     struct SelectType;
@@ -25,13 +25,13 @@ namespace ft
     };
 
     template <class T, bool is_const>
-    class RBTiterator;
+    class BSTiterator;
 
     template <class Iterator>
-    class RBTreverse_iterator;
+    class BSTreverse_iterator;
 
     template <class T, bool is_const = false>
-    class RBTiterator
+    class BSTiterator
     {
 	    public:
         typedef T value_type;
@@ -39,25 +39,25 @@ namespace ft
         typedef typename SelectType<is_const, T const *, T *>::type pointer;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
-        typedef RBTnode<T> *node_pointer;
+        typedef BSTnode<T> *node_pointer;
 
-        RBTiterator() : _node(NULL) {}
+        BSTiterator() : _node(NULL) {}
 
-        RBTiterator(const RBTiterator &other)
+        BSTiterator(const BSTiterator &other)
         {
             *this = other;
         }
 
-        RBTiterator(node_pointer ptr) : _node(ptr) {}
+        BSTiterator(node_pointer ptr) : _node(ptr) {}
 
-        ~RBTiterator() {}
+        ~BSTiterator() {}
 
-        operator RBTiterator<value_type, true>()
+        operator BSTiterator<value_type, true>()
         {
             return (_node);
         }
 
-        RBTiterator &operator=(const RBTiterator &rhs)
+        BSTiterator &operator=(const BSTiterator &rhs)
         {
             if (this == &rhs)
             {
@@ -68,12 +68,12 @@ namespace ft
             return (*this);
         }
 
-        bool operator==(const RBTiterator &rhs) const
+        bool operator==(const BSTiterator &rhs) const
         {
             return (_node == rhs._node);
         }
 
-        bool operator!=(const RBTiterator &rhs) const
+        bool operator!=(const BSTiterator &rhs) const
         {
             return (!(*this == rhs));
         }
@@ -88,29 +88,29 @@ namespace ft
             return (_node->data);
         }
 
-        RBTiterator &operator++()
+        BSTiterator &operator++()
         {
-            _node = ft::RedBlackTree<value_type>::successor(_node);
+            _node = ft::BinarySearchTree<value_type>::successor(_node);
             return (*this);
         }
 
-        RBTiterator operator++(int)
+        BSTiterator operator++(int)
         {
-            RBTiterator old = *this;
-			_node = ft::RedBlackTree<value_type>::successor(_node);
+            BSTiterator old = *this;
+			_node = ft::BinarySearchTree<value_type>::successor(_node);
             return (old);
         }
 
-        RBTiterator &operator--()
+        BSTiterator &operator--()
         {
-            _node = ft::RedBlackTree<value_type>::predecessor(_node);
+            _node = ft::BinarySearchTree<value_type>::predecessor(_node);
             return (*this);
         }
 
-        RBTiterator operator--(int)
+        BSTiterator operator--(int)
         {
-            RBTiterator old = *this;
-			_node = ft::RedBlackTree<value_type>::predecessor(_node);
+            BSTiterator old = *this;
+			_node = ft::BinarySearchTree<value_type>::predecessor(_node);
             return (old);
         }
 

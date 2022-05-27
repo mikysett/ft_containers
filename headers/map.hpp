@@ -7,7 +7,7 @@
 # include "iterator.hpp"
 # include "type_traits.hpp"
 # include "utility.hpp"
-# include "RedBlackTree.hpp"
+# include "BinarySearchTree.hpp"
 
 namespace ft {
 	template<
@@ -21,7 +21,7 @@ namespace ft {
 			class value_compare;
 		
 		private:
-			typedef RedBlackTree<ft::pair<const Key, T>, value_compare, Allocator> RedBlackTree;
+			typedef BinarySearchTree<ft::pair<const Key, T>, value_compare, Allocator> BinarySearchTree;
 		
 		public:
 			typedef Key key_type;
@@ -40,13 +40,13 @@ namespace ft {
 			// Constructors
 			explicit map( const key_compare& comp,
 				const allocator_type& alloc = allocator_type() )
-				: _bst(RedBlackTree(value_compare(comp), alloc))
+				: _bst(BinarySearchTree(value_compare(comp), alloc))
 				, _comp(comp)
 				, _alloc(alloc)
 			{}
 
 		private:
-            ft::RedBlackTree<value_type>    _bst;
+            ft::BinarySearchTree<value_type>    _bst;
             key_compare                     _comp;
             allocator_type                  _alloc;
 	};

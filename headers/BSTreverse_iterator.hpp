@@ -1,9 +1,9 @@
-#ifndef RBTREVERSE_ITERATOR_HPP
-# define RBTREVERSE_ITERATOR_HPP
+#ifndef BSTreverse_iterator_HPP
+# define BSTreverse_iterator_HPP
 
 namespace ft {
 	template <class Iterator>
-	class RBTreverse_iterator
+	class BSTreverse_iterator
 	{
 		public:
 		typedef Iterator iterator_type;
@@ -13,24 +13,24 @@ namespace ft {
 		typedef typename iterator_traits<Iterator>::pointer pointer;
 		typedef typename iterator_traits<Iterator>::reference reference;
 
-		RBTreverse_iterator() : _base(iterator_type()) {}
+		BSTreverse_iterator() : _base(iterator_type()) {}
 
-		explicit RBTreverse_iterator(iterator_type it) : _base(it) {}
+		explicit BSTreverse_iterator(iterator_type it) : _base(it) {}
 
 		template <class Iter>
-		RBTreverse_iterator(const RBTreverse_iterator<Iter> &rev_it) : _base(rev_it._base) {}
+		BSTreverse_iterator(const BSTreverse_iterator<Iter> &rev_it) : _base(rev_it._base) {}
 
 		iterator_type base() const
 		{
 			return (_base);
 		}
 
-		bool operator==(const RBTreverse_iterator &rhs) const
+		bool operator==(const BSTreverse_iterator &rhs) const
 		{
 			return (_base == rhs._base);
 		}
 
-		bool operator!=(const RBTreverse_iterator &rhs) const
+		bool operator!=(const BSTreverse_iterator &rhs) const
 		{
 			return (!(*this == rhs));
 		}
@@ -45,28 +45,28 @@ namespace ft {
 			return (&_base);
 		}
 
-		RBTreverse_iterator &operator++()
+		BSTreverse_iterator &operator++()
 		{
 			--_base;
 			return (*this);
 		}
 
-		RBTreverse_iterator operator++(int)
+		BSTreverse_iterator operator++(int)
 		{
-			RBTreverse_iterator old = *this;
+			BSTreverse_iterator old = *this;
 			--_base;
 			return (old);
 		}
 
-		RBTreverse_iterator &operator--()
+		BSTreverse_iterator &operator--()
 		{
 			++_base;
 			return (*this);
 		}
 
-		RBTreverse_iterator operator--(int)
+		BSTreverse_iterator operator--(int)
 		{
-			RBTreverse_iterator old = *this;
+			BSTreverse_iterator old = *this;
 			++_base;
 			return (old);
 		}

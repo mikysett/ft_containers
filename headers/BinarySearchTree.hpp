@@ -1,59 +1,59 @@
-#ifndef REDBLACKTREE_HPP
-# define REDBLACKTREE_HPP
+#ifndef BINARYSEARCHTREE_HPP
+# define BINARYSEARCHTREE_HPP
 
 # include <stdexcept>
 # include <sstream>
 
-# include "RBTnode.hpp"
+# include "BSTnode.hpp"
 # include "iterator.hpp"
 # include "type_traits.hpp"
-# include "RBTiterator.hpp"
-# include "RBTreverse_iterator.hpp"
+# include "BSTiterator.hpp"
+# include "BSTreverse_iterator.hpp"
 
 namespace ft {
 	template<
 		class T,
 		class Compare,
 		class Allocator >
-	class RedBlackTree
+	class BinarySearchTree
 	{
 		public:
 		typedef T value_type;
 		typedef Allocator alloc_type;
 		typedef Compare key_compare;
-		typedef RBTnode<T> node;
+		typedef BSTnode<T> node;
 		typedef node *node_pointer;
-		typedef RBTiterator<value_type, false> iterator;
-		typedef RBTiterator<value_type, true> const_iterator;
-		typedef RBTreverse_iterator<iterator> reverse_iterator;
-		typedef RBTreverse_iterator<const_iterator> const_reverse_iterator;
+		typedef BSTiterator<value_type, false> iterator;
+		typedef BSTiterator<value_type, true> const_iterator;
+		typedef BSTreverse_iterator<iterator> reverse_iterator;
+		typedef BSTreverse_iterator<const_iterator> const_reverse_iterator;
 
-		RedBlackTree(const key_compare &comp = key_compare(),
+		BinarySearchTree(const key_compare &comp = key_compare(),
 			const alloc_type &alloc = alloc_type())
 			: _comp(comp)
 			, _alloc(alloc)
-			, _nil(new node(BLACK))
+			, _nil(new node())
 			, _root(_nil)
 		{}
 
-		RedBlackTree(const RedBlackTree &other)
+		BinarySearchTree(const BinarySearchTree &other)
 		{
 			*this = other;
 		}
 
-		~RedBlackTree()
+		~BinarySearchTree()
 		{
 			clear();
 			delete(_nil);
 		}
 
-		RedBlackTree &operator=(const RedBlackTree &other)
+		BinarySearchTree &operator=(const BinarySearchTree &other)
 		{
-			this->~RedBlackTree();
+			this->~BinarySearchTree();
 
 			_comp = other._comp;
 			_alloc = other._alloc;
-			_nil = new node(BLACK);
+			_nil = new node();
 			_root = _nil;
 
 			node_pointer curr_node = other.start();
@@ -111,7 +111,6 @@ namespace ft {
 			node_pointer new_node = newNode(key);
 
 			bstInsert(new_node, _root);
-			fixInsert(new_node);
 		}
 
 		private:
@@ -187,11 +186,6 @@ namespace ft {
 				parent->left = n;
 			else
 				parent->right = n;
-		}
-
-		void fixInsert(node_pointer new_node)
-		{
-			
 		}
 	};
 }

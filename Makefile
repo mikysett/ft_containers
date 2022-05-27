@@ -29,10 +29,10 @@ SUB_DIR_O := $(SUB_DIR_O:%=$(DIR_O)/%)
 DEPS	=	$(HEADERS)/ft_containers.hpp \
 			$(HEADERS)/vector.hpp \
 			$(HEADERS)/map.hpp \
-			$(HEADERS)/RedBlackTree.hpp \
-			$(HEADERS)/RBTiterator.hpp \
-			$(HEADERS)/RBTreverse_iterator.hpp \
-			$(HEADERS)/RBTnode.hpp \
+			$(HEADERS)/BinarySearchTree.hpp \
+			$(HEADERS)/BSTiterator.hpp \
+			$(HEADERS)/BSTreverse_iterator.hpp \
+			$(HEADERS)/BSTnode.hpp \
 
 CC		=	clang++
 
