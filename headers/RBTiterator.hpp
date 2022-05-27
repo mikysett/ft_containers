@@ -1,7 +1,6 @@
 #ifndef RBTITERATOR_HPP
 # define RBTITERATOR_HPP
 
-
 namespace ft
 {
     template<

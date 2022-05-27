@@ -110,7 +110,7 @@ namespace ft {
 		{
 			node_pointer new_node = newNode(key);
 
-			bstInsert(new_node);
+			bstInsert(new_node, _root);
 			fixInsert(new_node);
 		}
 
@@ -164,6 +164,34 @@ namespace ft {
 			while (node->right->parent)
 				node = node->right;
 			return (node);
+		}
+
+		void bstInsert(node_pointer n, node_pointer start)
+		{
+			node_pointer curr_node = start;
+			node_pointer parent = NULL;
+
+			while (curr_node != _nil)
+			{
+				parent = curr_node;
+				if (_comp(*curr_node->data, *n->data))
+					curr_node = curr_node->left;
+				else
+					curr_node = curr_node->right;
+			}
+
+			n->parent = parent;
+			if (!parent)
+				_root = n;
+			else if (_comp(*parent->data, *n->data))
+				parent->left = n;
+			else
+				parent->right = n;
+		}
+
+		void fixInsert(node_pointer new_node)
+		{
+			
 		}
 	};
 }
