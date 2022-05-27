@@ -113,18 +113,36 @@ namespace ft {
 			bstInsert(new_node, _root);
 		}
 
+		bool remove(const value_type &key)
+		{
+			node_pointer node_to_remove = findKey(_root, key);
+
+			if (node_to_remove)
+			{
+				bstRemove(node_to_remove);
+				return (true);
+			}
+			return (false);
+		}
+
+		void clear()
+		{
+			clearHelper(_root);
+			_root = _nil;
+		}
+
 		private:
 		key_compare _comp;
 		alloc_type _alloc;
 		node_pointer _nil;
 		node_pointer _root;
 
-		void clear(node_pointer curr_node)
+		void clearHelper(node_pointer curr_node)
 		{
 			if (curr_node == _nil)
 				return ;
-			clear(curr_node->left);
-			clear(curr_node->right);
+			clearHelper(curr_node->left);
+			clearHelper(curr_node->right);
 
 			freeNode(curr_node);
 		}
@@ -187,7 +205,49 @@ namespace ft {
 			else
 				parent->right = n;
 		}
+
+		node_pointer findKey(node_pointer start, const value_type &key)
+		{
+			while (start != _nil)
+			{
+				if (!(_comp(*start->data, key) || _comp(key, *start->data)))
+					return start;
+				else if (_comp(*start->data, key))
+					start = start->right;
+				else
+					start = start->left;
+			}
+			return (NULL);
+		}
+
+		void bstRemove(node_pointer to_remove)
+		{
+			// TODO implement removal
+			node_pointer child_left = to_remove->left;
+			node_pointer child_right = to_remove->right;
+			node_pointer parent = to_remove->parent;
+
+			freeNode(to_remove);
+		}
+
+		void transplant(node_pointer dst, node_pointer src)
+		{
+			// TODO check it and fix it, probably buggy
+			if (dst == _nil)
+				_root = src;
+			else
+			{
+				src->parent = dst;
+
+				if (_comp(*dst->data, *src->data))
+					dst->right = src;
+				else
+					dst->left = src;
+			}
+
+		}
 	};
+
 }
 
 #endif
