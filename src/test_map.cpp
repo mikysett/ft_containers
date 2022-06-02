@@ -5,15 +5,25 @@
 
 template<class Key, class T>
 void print_map_info(ft::map<Key, T> &);
+void dcavalei_map_test();
+void constructor_test();
+
 
 void test_map() {
-	
+	constructor_test();
+	dcavalei_map_test();
+}
+
+void constructor_test()
+{
+	ft::map<int, std::string> m1;
+
+	print_map_info(m1);
 }
 
 template<class Key, class T>
 void print_map_info(ft::map<Key, T> &m) {
 	std::cout << "size    : " << m.size() << std::endl;
-	std::cout << "capacity: " << m.capacity() << std::endl;
 
 	if (m.size() > 0) {
 		std::cout << "Elements: ";
@@ -22,4 +32,56 @@ void print_map_info(ft::map<Key, T> &m) {
 		}
 		std::cout << std::endl;
 	}
+}
+
+
+// FOLLOWING TESTS BY DCAVALEI PROJECT, THANKS
+typedef std::string string;
+typedef ft::map<int, string> map;
+typedef ft::pair<int, string> pair;
+
+void dcavalei_map_test()
+{
+// 	pair p[10];
+// 	for (size_t i = 0; i < 10; i++)
+// 	{
+// 		p[i].first = i;
+// 		p[i].second = 'a' + i;
+// 	}
+
+// 	map map_d;
+// 	map map_r(p, p + 10);
+// 	map map_c(map_r);
+// 	map::iterator itr = map_d.end();
+
+// 	map_d.insert(p, p + 10);
+// 	for (map::iterator it = map_d.begin(); it != itr; ++it)
+// 	{
+// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
+// 	}
+// 	std::cout << "-----" << std::endl;
+
+// 	itr = map_r.end();
+// 	for (map::iterator it = map_r.begin(); it != itr; ++it)
+// 	{
+// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
+// 	}
+// 	std::cout << "-----" << std::endl;
+
+// 	itr = map_c.end();
+// 	for (map::iterator it = map_c.begin(); it != itr; ++it)
+// 	{
+// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
+// 	}
+// 	std::cout << "-----" << std::endl;
+
+// 	map map_a;
+// 	map_a = map_c;
+
+// 	itr = map_a.end();
+// 	for (map::iterator it = map_a.begin(); it != itr; ++it)
+// 	{
+// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
+// 	}
+// 	std::cout << "-----" << std::endl;
 }

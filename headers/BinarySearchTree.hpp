@@ -28,7 +28,9 @@ namespace ft {
 		typedef BSTreverse_iterator<iterator> reverse_iterator;
 		typedef BSTreverse_iterator<const_iterator> const_reverse_iterator;
 
-		BinarySearchTree(const key_compare &comp = key_compare(),
+		// BinarySearchTree() {};
+
+		BinarySearchTree(const key_compare &comp,
 			const alloc_type &alloc = alloc_type())
 			: _comp(comp)
 			, _alloc(alloc)
@@ -131,6 +133,25 @@ namespace ft {
 			_root = _nil;
 		}
 
+		node_pointer findKey(node_pointer start, const value_type &key)
+		{
+			while (start != _nil)
+			{
+				if (!(_comp(*start->data, key) || _comp(key, *start->data)))
+					return start;
+				else if (_comp(*start->data, key))
+					start = start->right;
+				else
+					start = start->left;
+			}
+			return (NULL);
+		}
+
+		node_pointer getRoot() const
+		{
+			return (_root);
+		}
+
 		private:
 		key_compare _comp;
 		alloc_type _alloc;
@@ -191,7 +212,7 @@ namespace ft {
 			while (curr_node != _nil)
 			{
 				parent = curr_node;
-				if (_comp(*curr_node->data, *n->data))
+				if (_comp(*n->data, *curr_node->data))
 					curr_node = curr_node->left;
 				else
 					curr_node = curr_node->right;
@@ -206,45 +227,43 @@ namespace ft {
 				parent->right = n;
 		}
 
-		node_pointer findKey(node_pointer start, const value_type &key)
-		{
-			while (start != _nil)
-			{
-				if (!(_comp(*start->data, key) || _comp(key, *start->data)))
-					return start;
-				else if (_comp(*start->data, key))
-					start = start->right;
-				else
-					start = start->left;
-			}
-			return (NULL);
-		}
-
 		void bstRemove(node_pointer to_remove)
 		{
-			// TODO implement removal
 			node_pointer child_left = to_remove->left;
 			node_pointer child_right = to_remove->right;
 			node_pointer parent = to_remove->parent;
 
-			freeNode(to_remove);
-		}
-
-		void transplant(node_pointer dst, node_pointer src)
-		{
-			// TODO check it and fix it, probably buggy
-			if (dst == _nil)
-				_root = src;
+			if (to_remove == _root)
+			{
+				if (child_left != _nil)
+					_root = child_left;
+				else
+					_root = child_right;
+			}
 			else
 			{
-				src->parent = dst;
-
-				if (_comp(*dst->data, *src->data))
-					dst->right = src;
+				if (to_remove == parent->left)
+				{
+					if (child_left != _nil)
+						parent->left = child_left;
+					else
+						parent->left = child_right;
+				}
 				else
-					dst->left = src;
+				{
+					if (child_left != _nil)
+						parent->right = child_left;
+					else
+						parent->right = child_right;
+				}
+			}
+			if (child_left != _nil && child_right != _nil)
+			{
+				node_pointer where_to_append = max(child_left);
+				where_to_append->right = child_right;
 			}
 
+			freeNode(to_remove);
 		}
 	};
 
