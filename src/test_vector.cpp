@@ -21,7 +21,7 @@ void print_info(ft::vector<T> &);
 
 void test_vector() {
 	test_constructors();
- 	test_reserve();
+ 	// test_reserve(); // comment to run fsanitize
 	test_front_back();
 	test_data();
 	test_assign();

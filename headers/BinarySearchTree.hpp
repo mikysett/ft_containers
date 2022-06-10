@@ -28,7 +28,10 @@ namespace ft {
 		typedef BSTreverse_iterator<iterator> reverse_iterator;
 		typedef BSTreverse_iterator<const_iterator> const_reverse_iterator;
 
-		// BinarySearchTree() {};
+		BinarySearchTree()
+			: _nil(new node())
+			, _root(_nil)
+		{};
 
 		BinarySearchTree(const key_compare &comp,
 			const alloc_type &alloc = alloc_type())

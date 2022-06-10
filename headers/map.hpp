@@ -64,12 +64,13 @@ namespace ft {
 				, _alloc(alloc)
 				, _size(0)
 			{
-				while (first != last)
-				{
-					_bst.bstInsert(*first, _bst.getRoot());
-					first++;
-					_size++;
-				}
+				insert(first, last);
+				// while (first != last)
+				// {
+				// 	_bst.bstInsert(*first, _bst.getRoot());
+				// 	first++;
+				// 	_size++;
+				// }
 			}
 
 			map( const map& other )
@@ -133,6 +134,8 @@ namespace ft {
 					_bst.insert(pair);
 					_size++;
 					node = _bst.findKey(_bst.getRoot(), pair);
+					if (node == NULL)
+					std::cout << "!!!!!!!!!!!ERROR!!!!!!!!!" << std::endl;
 				}
 				return ((*node->data).second);
 			}
@@ -191,9 +194,9 @@ namespace ft {
 				_size = 0;
 			}
 
-			std::pair<iterator, bool> insert( const value_type& value )
+			ft::pair<iterator, bool> insert( const value_type& value )
 			{
-				std::pair<iterator, bool> result;
+				ft::pair<iterator, bool> result;
 				node_pointer node = _bst.findKey(_bst.getRoot(), value);
 
 				if (node)
@@ -212,6 +215,7 @@ namespace ft {
 			iterator insert( iterator hint, const value_type& value )
 			{
 				// TODO implement it (as close, prior to (since c++11) hint)
+				insert(value);
 			}
 
 			void erase( iterator pos )

@@ -36,7 +36,7 @@ DEPS	=	$(HEADERS)/ft_containers.hpp \
 
 CC		=	clang++
 
-CFLAGS	=	-Wall -Wextra -std=c++98
+CFLAGS	=	-Wall -Wextra -std=c++98 -g
 INCLUDES	= -I $(HEADERS)
 
 RM		=	rm -f

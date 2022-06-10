@@ -42,46 +42,52 @@ typedef ft::pair<int, string> pair;
 
 void dcavalei_map_test()
 {
-// 	pair p[10];
-// 	for (size_t i = 0; i < 10; i++)
-// 	{
-// 		p[i].first = i;
-// 		p[i].second = 'a' + i;
-// 	}
+	pair p[10];
+	for (size_t i = 0; i < 10; i++)
+	{
+		p[i].first = i;
+		p[i].second = 'a' + i;
+	}
 
-// 	map map_d;
-// 	map map_r(p, p + 10);
-// 	map map_c(map_r);
-// 	map::iterator itr = map_d.end();
+	map map_d;
+	std::cout << "map_d created" << std::endl;
+	print_map_info(map_d);
+	map map_r(p, p + 10);
+	std::cout << "map_r created" << std::endl;
+	print_map_info(map_r);
+	map map_c(map_r);
+	std::cout << "map_c created" << std::endl;
+	print_map_info(map_c);
+	map::iterator itr = map_d.end();
 
-// 	map_d.insert(p, p + 10);
-// 	for (map::iterator it = map_d.begin(); it != itr; ++it)
-// 	{
-// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
-// 	}
-// 	std::cout << "-----" << std::endl;
+	map_d.insert(p, p + 10);
+	for (map::iterator it = map_d.begin(); it != itr; ++it)
+	{
+		std::cout << (*it).first << " - " << (*it).second << std::endl;
+	}
+	std::cout << "-----" << std::endl;
 
-// 	itr = map_r.end();
-// 	for (map::iterator it = map_r.begin(); it != itr; ++it)
-// 	{
-// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
-// 	}
-// 	std::cout << "-----" << std::endl;
+	itr = map_r.end();
+	for (map::iterator it = map_r.begin(); it != itr; ++it)
+	{
+		std::cout << (*it).first << " - " << (*it).second << std::endl;
+	}
+	std::cout << "-----" << std::endl;
 
-// 	itr = map_c.end();
-// 	for (map::iterator it = map_c.begin(); it != itr; ++it)
-// 	{
-// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
-// 	}
-// 	std::cout << "-----" << std::endl;
+	itr = map_c.end();
+	for (map::iterator it = map_c.begin(); it != itr; ++it)
+	{
+		std::cout << (*it).first << " - " << (*it).second << std::endl;
+	}
+	std::cout << "-----" << std::endl;
 
-// 	map map_a;
-// 	map_a = map_c;
+	map map_a;
+	map_a = map_c;
 
-// 	itr = map_a.end();
-// 	for (map::iterator it = map_a.begin(); it != itr; ++it)
-// 	{
-// 		std::cout << (*it).first << " - " << (*it).second << std::endl;
-// 	}
-// 	std::cout << "-----" << std::endl;
+	itr = map_a.end();
+	for (map::iterator it = map_a.begin(); it != itr; ++it)
+	{
+		std::cout << (*it).first << " - " << (*it).second << std::endl;
+	}
+	std::cout << "-----" << std::endl;
 }
