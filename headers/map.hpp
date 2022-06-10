@@ -26,25 +26,25 @@ namespace ft {
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
-			typedef typename std::pair<const Key, T> value_type;
-			typedef typename std::size_t size_type;
 			typedef Compare key_compare;
+			typedef typename ft::pair<const Key, T> value_type;
 			typedef Allocator allocator_type;
-			typedef value_type& reference;
-			typedef const value_type& const_reference;
-			typedef typename Allocator::pointer pointer;
-			typedef typename Allocator::const_pointer const_pointer;
-			// typedef typename std::LegacyBidirectionalIterator<value_type> iterator;
-			// typedef typename std::LegacyBidirectionalIterator<const value_type> const_iterator;
 
 			typedef typename BinarySearchTree::iterator iterator;
 			typedef typename BinarySearchTree::const_iterator const_iterator;
 			typedef typename BinarySearchTree::reverse_iterator reverse_iterator;
 			typedef typename BinarySearchTree::const_reverse_iterator const_reverse_iterator;
 
+			typedef typename allocator_type::reference reference;
+			typedef typename allocator_type::const_reference const_reference;
+			typedef typename allocator_type::pointer pointer;
+			typedef typename allocator_type::const_pointer const_pointer;
+			typedef typename allocator_type::size_type size_type;
+
+			typedef typename iterator_traits<iterator>::difference_type difference_type;
+
+
 			typedef typename BinarySearchTree::node_pointer node_pointer;
-			// typedef BSTnode<T> node;
-			// typedef node *node_pointer;
 			
 			// Constructors
 			explicit map( const key_compare& comp = key_compare(),
@@ -101,7 +101,9 @@ namespace ft {
 					{
 						return comp(x.first, y.first);
 					}
-					value_compare(const key_compare &c = key_compare()) : comp(c) {}
+					value_compare(const key_compare &c = key_compare())
+						: comp(c)
+					{}
 			};
 
 			allocator_type get_allocator() const
@@ -121,18 +123,18 @@ namespace ft {
 				return (*(node->data).second);
 			}
 
-			T& operator[]( const T& key )
+			mapped_type& operator[]( const key_type& key )
 			{
-				node_pointer node = _bst.findKey(_bst.getRoot(), key);
+				value_type pair(key, mapped_type());
+				node_pointer node = _bst.findKey(_bst.getRoot(), pair);
 				
 				if (node == NULL)
 				{
-					value_type pair(key, T());
 					_bst.insert(pair);
 					_size++;
-					node = _bst.findKey(_bst.getRoot(), key);
+					node = _bst.findKey(_bst.getRoot(), pair);
 				}
-				return (node);
+				return ((*node->data).second);
 			}
 
 
