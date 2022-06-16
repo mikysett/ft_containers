@@ -212,6 +212,13 @@ namespace ft {
 			node_pointer curr_node = start;
 			node_pointer parent = NULL;
 
+			DEBUG(
+				std::cout << "-- bstInsert:" << std::endl;
+				std::cout << "---- BSTnode n    : ";
+				n->print();
+				std::cout << "---- BSTnode start: ";
+				start->print();
+			)
 			while (curr_node != _nil)
 			{
 				parent = curr_node;
@@ -224,8 +231,11 @@ namespace ft {
 			n->parent = parent;
 			if (!parent)
 				_root = n;
-			else if (_comp(*parent->data, *n->data))
+			else if (_comp(*n->data, *parent->data))
+			{
 				parent->left = n;
+
+			}
 			else
 				parent->right = n;
 		}

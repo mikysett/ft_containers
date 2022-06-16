@@ -134,8 +134,6 @@ namespace ft {
 					_bst.insert(pair);
 					_size++;
 					node = _bst.findKey(_bst.getRoot(), pair);
-					if (node == NULL)
-					std::cout << "!!!!!!!!!!!ERROR!!!!!!!!!" << std::endl;
 				}
 				return ((*node->data).second);
 			}
@@ -150,11 +148,11 @@ namespace ft {
 			}
 
 			iterator end() {
-				return iterator(_bst.start() + _size);
+				return iterator(NULL);
 			}
 
 			const_iterator end() const {
-				return (const_iterator(_bst.start() + _size));
+				return (const_iterator(NULL));
 			}
 
 			reverse_iterator rbegin() {
@@ -166,11 +164,11 @@ namespace ft {
 			}
 
 			reverse_iterator rend() {
-				return (reverse_iterator(begin()));
+				return (reverse_iterator(NULL));
 			}
 
 			const_reverse_iterator rend() const {
-				return (const_reverse_iterator(begin()));
+				return (const_reverse_iterator(NULL));
 			}
 
 

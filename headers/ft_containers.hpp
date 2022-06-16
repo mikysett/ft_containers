@@ -1,6 +1,12 @@
 #ifndef FT_CONTAINERS_HPP
 # define FT_CONTAINERS_HPP
 
+#ifdef DEBUG_MODE
+# define DEBUG(x) x
+#else
+# define DEBUG(x)
+#endif
+
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -18,7 +24,6 @@
 	#include "utility.hpp"
 	#include "type_traits.hpp"
 #endif
-
 
 #include "tests.hpp"
 

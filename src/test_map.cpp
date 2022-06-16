@@ -23,12 +23,18 @@ void constructor_test()
 
 template<class Key, class T>
 void print_map_info(ft::map<Key, T> &m) {
+	std::cout << "(print_map_info)" << std::endl;
 	std::cout << "size    : " << m.size() << std::endl;
+	T* curr_value;
 
 	if (m.size() > 0) {
 		std::cout << "Elements: ";
 		for (size_t i = 0 ; i < m.size() ; i++) {
-			std::cout << m[i] << ", ";
+			curr_value = &m[i];
+			if (curr_value)
+				std::cout << "(" << i << ", " << m[i] << ")" << ", ";
+			else
+				std::cout << "(" << i << ", " << "NO_VALUE" << ")" << ", ";
 		}
 		std::cout << std::endl;
 	}
@@ -52,21 +58,27 @@ void dcavalei_map_test()
 	map map_d;
 	std::cout << "map_d created" << std::endl;
 	print_map_info(map_d);
+	std::cout << std::endl;
 	map map_r(p, p + 10);
 	std::cout << "map_r created" << std::endl;
 	print_map_info(map_r);
+	std::cout << std::endl;
 	map map_c(map_r);
 	std::cout << "map_c created" << std::endl;
 	print_map_info(map_c);
-	map::iterator itr = map_d.end();
+	std::cout << std::endl;
 
 	map_d.insert(p, p + 10);
+	map::iterator itr = map_d.end();
+	std::cout << "PRINT MAP_D" << std::endl;
 	for (map::iterator it = map_d.begin(); it != itr; ++it)
 	{
 		std::cout << (*it).first << " - " << (*it).second << std::endl;
 	}
 	std::cout << "-----" << std::endl;
 
+	std::cout << "PRINT MAP_R" << std::endl;
+	print_map_info(map_r);
 	itr = map_r.end();
 	for (map::iterator it = map_r.begin(); it != itr; ++it)
 	{
@@ -74,6 +86,7 @@ void dcavalei_map_test()
 	}
 	std::cout << "-----" << std::endl;
 
+	std::cout << "PRINT MAP_C" << std::endl;
 	itr = map_c.end();
 	for (map::iterator it = map_c.begin(); it != itr; ++it)
 	{
