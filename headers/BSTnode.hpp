@@ -44,22 +44,23 @@ namespace ft {
 
 		DEBUG(
 			void print() const {
-				if (data)
-					std::cout << "data: " << data->first << " - " << data->second;
-				else
-					std::cout << " | no data";
-				if (left && left->data)
-					std::cout << " | left data: " << left->data->first << " - " << left->data->second;
-				else
-					std::cout << " | no left";
-				if (right && right->data)
-					std::cout << " | right data: " << right->data->first << " - " << right->data->second;
-				else
-					std::cout << " | no right";
-				if (parent && parent->data)
-					std::cout << " | parent data: " << parent->data->first << " - " << parent->data->second << std::endl;
-				else
-					std::cout << " | no parent" << std::endl;
+				// THIS TEST CODE BRINGS SOME HEAP USAGE AFTER FREE ERRORS
+				// if (data && data->first)
+				// 	std::cout << "data: " << data->first << " - " << data->second;
+				// else
+				// 	std::cout << " | no data";
+				// if (left && left->data && left->data->first)
+				// 	std::cout << " | left data: " << left->data->first << " - " << left->data->second;
+				// else
+				// 	std::cout << " | no left";
+				// if (right && right->data && right->data->first)
+				// 	std::cout << " | right data: " << right->data->first << " - " << right->data->second;
+				// else
+				// 	std::cout << " | no right";
+				// if (parent && parent->data && parent->data->first)
+				// 	std::cout << " | parent data: " << parent->data->first << " - " << parent->data->second << std::endl;
+				// else
+				// 	std::cout << " | no parent" << std::endl;
 			}
 		)
 

@@ -147,11 +147,19 @@ namespace ft {
 				return const_iterator(_bst.start());
 			}
 
+			const_iterator cbegin() const {
+				return const_iterator(_bst.start());
+			}
+
 			iterator end() {
 				return iterator(NULL);
 			}
 
 			const_iterator end() const {
+				return (const_iterator(NULL));
+			}
+
+			const_iterator cend() const {
 				return (const_iterator(NULL));
 			}
 
@@ -202,9 +210,9 @@ namespace ft {
 				else
 				{
 					_bst.insert(value);
+					_size++;
 					node = _bst.findKey(_bst.getRoot(), value);
 					result.second = true;
-					_size++;
 				}
 				result.first = iterator(node);
 				return (result);
@@ -212,14 +220,39 @@ namespace ft {
 
 			iterator insert( iterator hint, const value_type& value )
 			{
-				// TODO implement it (as close, prior to (since c++11) hint)
-				insert(value);
+				_bst.insert(value, hint.getNode());
+				return (iterator(_bst.findKey(_bst.getRoot(), value)));
 			}
 
 			void erase( iterator pos )
 			{
-				_bst.bstRemove(pos.getNode());
-			}			
+				value_type *data_to_remove = pos.getNode()->data;
+				
+				_bst.remove(*data_to_remove);
+				_size--;
+			}
+
+			size_type erase( const key_type& key )
+			{
+				size_type nb_erased = 0;
+				value_type pair(key, mapped_type());
+
+				while (_bst.remove(pair))
+					nb_erased++;
+				_size -= nb_erased;
+				return (nb_erased);
+			}
+
+			void erase( iterator first, iterator last )
+			{
+				iterator next = first;
+				while (next != last)
+				{
+					next = first++;
+					erase(first);
+					first = next;
+				}
+			}
 
 			template< class InputIt >
 			void insert( InputIt first, InputIt last )
@@ -229,6 +262,25 @@ namespace ft {
 					insert(*first);
 					first++;
 				}
+			}
+
+			void swap( map& other )
+			{
+				// TODO test it
+				size_type tmp_size;
+				node_pointer tmp_root, tmp_nil;
+
+				tmp_size = this->_size;
+				tmp_root = this->_bst._root;
+				tmp_nil = this->_bst._nil;
+
+				this->_size = other._size;
+				this->_bst._root = other._bst._root;
+				this->_bst._nil = other._bst._nil;
+
+				other._size = tmp_size;
+				other._bst._root = tmp_root;
+				other._bst._nil = tmp_nil;
 			}
 
 			value_compare value_comp() const { return (_comp); }

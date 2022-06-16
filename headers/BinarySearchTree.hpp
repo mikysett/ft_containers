@@ -17,6 +17,7 @@ namespace ft {
 		class Allocator >
 	class BinarySearchTree
 	{
+
 		public:
 		typedef T value_type;
 		typedef Allocator alloc_type;
@@ -27,6 +28,14 @@ namespace ft {
 		typedef BSTiterator<value_type, true> const_iterator;
 		typedef BSTreverse_iterator<iterator> reverse_iterator;
 		typedef BSTreverse_iterator<const_iterator> const_reverse_iterator;
+
+		private:
+		key_compare _comp;
+		alloc_type _alloc;
+		
+		public:
+		node_pointer _nil;
+		node_pointer _root;
 
 		BinarySearchTree()
 			: _nil(new node())
@@ -118,7 +127,14 @@ namespace ft {
 			bstInsert(new_node, _root);
 		}
 
-		bool remove(const value_type &key)
+		void insert(const value_type &key, node_pointer start)
+		{
+			node_pointer new_node = newNode(key);
+
+			bstInsert(new_node, start);
+		}
+
+		bool remove(value_type &key)
 		{
 			node_pointer node_to_remove = findKey(_root, key);
 
@@ -156,11 +172,6 @@ namespace ft {
 		}
 
 		private:
-		key_compare _comp;
-		alloc_type _alloc;
-		node_pointer _nil;
-		node_pointer _root;
-
 		void clearHelper(node_pointer curr_node)
 		{
 			if (curr_node == _nil)

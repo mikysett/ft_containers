@@ -26,7 +26,7 @@ namespace ft {
 			, second(p.second)
 		{};
 
-		pair &operator=(pair &other) {
+		pair &operator=(const pair &other) {
 			if (this == &other) {
 				return (*this);
 			}
