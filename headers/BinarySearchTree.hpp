@@ -80,6 +80,17 @@ namespace ft {
 			return (*this);
 		}
 
+		node_pointer newNode(const value_type &key)
+		{
+			node_pointer new_node = new node(_alloc.allocate(1));
+
+			_alloc.construct(new_node->data, key);
+			new_node->parent = 0;
+			new_node->left = _nil;
+			new_node->right = _nil;
+			return (new_node);
+		}
+
 		node_pointer start() const
 		{
 			return (min(_root));
@@ -99,7 +110,7 @@ namespace ft {
 				while (parent && parent->right == start)
 				{
 					start = parent;
-					parent = start->parent;
+					parent = parent->parent;
 				}
 				return (parent);
 			}
@@ -127,11 +138,37 @@ namespace ft {
 			bstInsert(new_node, _root);
 		}
 
-		void insert(const value_type &key, node_pointer start)
+		void bstInsert(node_pointer n, node_pointer start)
 		{
-			node_pointer new_node = newNode(key);
+			node_pointer curr_node = start;
+			node_pointer parent = NULL;
 
-			bstInsert(new_node, start);
+			DEBUG(
+				std::cout << "-- bstInsert:" << std::endl;
+				std::cout << "---- BSTnode n    : ";
+				n->print();
+				std::cout << "---- BSTnode start: ";
+				start->print();
+			)
+			while (curr_node != _nil)
+			{
+				parent = curr_node;
+				if (_comp(*n->data, *curr_node->data))
+					curr_node = curr_node->left;
+				else
+					curr_node = curr_node->right;
+			}
+
+			n->parent = parent;
+			if (!parent)
+				_root = n;
+			else if (_comp(*n->data, *parent->data))
+			{
+				parent->left = n;
+
+			}
+			else
+				parent->right = n;
 		}
 
 		bool remove(value_type &key)
@@ -189,19 +226,9 @@ namespace ft {
 			delete(node);
 		}
 
-		node_pointer newNode(const value_type &key)
-		{
-			node_pointer new_node = new node(_alloc.allocate(1));
-
-			_alloc.construct(new_node->data, key);
-			new_node->parent = 0;
-			new_node->left = _nil;
-			new_node->right = _nil;
-			return (new_node);
-		}
-
 		static node_pointer min(node_pointer node)
 		{
+			// std::cout << node->data->first << std::endl;
 			if (!node || !node->left)
 				return NULL;
 			while (node->left->parent)
@@ -218,39 +245,6 @@ namespace ft {
 			return (node);
 		}
 
-		void bstInsert(node_pointer n, node_pointer start)
-		{
-			node_pointer curr_node = start;
-			node_pointer parent = NULL;
-
-			DEBUG(
-				std::cout << "-- bstInsert:" << std::endl;
-				std::cout << "---- BSTnode n    : ";
-				n->print();
-				std::cout << "---- BSTnode start: ";
-				start->print();
-			)
-			while (curr_node != _nil)
-			{
-				parent = curr_node;
-				if (_comp(*n->data, *curr_node->data))
-					curr_node = curr_node->left;
-				else
-					curr_node = curr_node->right;
-			}
-
-			n->parent = parent;
-			if (!parent)
-				_root = n;
-			else if (_comp(*n->data, *parent->data))
-			{
-				parent->left = n;
-
-			}
-			else
-				parent->right = n;
-		}
-
 		void bstRemove(node_pointer to_remove)
 		{
 			node_pointer child_left = to_remove->left;
@@ -260,31 +254,54 @@ namespace ft {
 			if (to_remove == _root)
 			{
 				if (child_left != _nil)
+				{
 					_root = child_left;
+					child_left->parent = NULL;
+				}
 				else
+				{
 					_root = child_right;
+					child_right->parent = NULL;
+				}
 			}
 			else
 			{
 				if (to_remove == parent->left)
 				{
 					if (child_left != _nil)
+					{
 						parent->left = child_left;
-					else
+						child_left->parent = parent;
+					}
+					else if (child_right != _nil)
+					{
 						parent->left = child_right;
+						child_right->parent = parent;
+					}
+					else
+						parent->left = _nil;
 				}
 				else
 				{
 					if (child_left != _nil)
+					{
 						parent->right = child_left;
-					else
+						child_left->parent = parent;		
+					}
+					else if (child_right != _nil)
+					{
 						parent->right = child_right;
+						child_right->parent = parent;
+					}
+					else
+						parent->right = _nil;
 				}
 			}
 			if (child_left != _nil && child_right != _nil)
 			{
 				node_pointer where_to_append = max(child_left);
 				where_to_append->right = child_right;
+				child_right->parent = where_to_append;
 			}
 
 			freeNode(to_remove);

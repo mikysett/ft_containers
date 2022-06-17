@@ -6,12 +6,14 @@
 template<class Key, class T>
 void print_map_info(ft::map<Key, T> &);
 void dcavalei_map_test();
+void dcavalei_map_modifiers();
 void constructor_test();
 
 
 void test_map() {
 	constructor_test();
 	dcavalei_map_test();
+	dcavalei_map_modifiers();
 }
 
 void constructor_test()
@@ -91,6 +93,8 @@ void dcavalei_map_test()
 		std::cout << (*it).first << " - " << (*it).second << std::endl;
 	}
 	map_r.erase(map_r.begin());
+	map_r.erase(map_r.begin());
+	map_r.erase(map_r.begin());
 	print_map_info(map_r);
 	std::cout << "-----" << std::endl;
 
@@ -111,6 +115,7 @@ void dcavalei_map_test()
 		std::cout << (*it).first << " - " << (*it).second << std::endl;
 	}
 
+	std::cout << "ERASING THE ENTIRE MAP_A" << std::endl;
 	map_a.erase(map_a.begin(), map_a.end());
 	print_map_info(map_a);
 	std::cout << "-----" << std::endl;
@@ -232,6 +237,7 @@ void dcavalei_map_modifiers()
 	}
 	printMap(map_other);
 
+	std::cout << "---> SWAPPING OPERATION" << std::endl;
 	map.swap(map_other);
 	printMap(map);
 	printMap(map_other);

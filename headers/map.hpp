@@ -65,12 +65,6 @@ namespace ft {
 				, _size(0)
 			{
 				insert(first, last);
-				// while (first != last)
-				// {
-				// 	_bst.bstInsert(*first, _bst.getRoot());
-				// 	first++;
-				// 	_size++;
-				// }
 			}
 
 			map( const map& other )
@@ -152,7 +146,7 @@ namespace ft {
 			}
 
 			iterator end() {
-				return iterator(NULL);
+				return (iterator(NULL));
 			}
 
 			const_iterator end() const {
@@ -164,11 +158,11 @@ namespace ft {
 			}
 
 			reverse_iterator rbegin() {
-				return (reverse_iterator(end()));
+				return (reverse_iterator(_bst.last()));
 			}
 
 			const_reverse_iterator rbegin() const {
-				return (const_reverse_iterator(end()));
+				return (const_reverse_iterator(_bst.last()));
 			}
 
 			reverse_iterator rend() {
@@ -176,6 +170,10 @@ namespace ft {
 			}
 
 			const_reverse_iterator rend() const {
+				return (const_reverse_iterator(NULL));
+			}
+
+			reverse_iterator crend() {
 				return (const_reverse_iterator(NULL));
 			}
 
@@ -220,14 +218,60 @@ namespace ft {
 
 			iterator insert( iterator hint, const value_type& value )
 			{
-				_bst.insert(value, hint.getNode());
-				return (iterator(_bst.findKey(_bst.getRoot(), value)));
+				// TODO implement it correctly, this is a hack
+				// return insert(value).first;
+				// std::cout << "iterator insert( iterator hint, const value_type& value )" << std::endl;
+				// _bst.insert(value, hint.getNode());
+				// _size++;
+				// return (iterator(_bst.findKey(_bst.getRoot(), value)));
+
+
+
+				node_pointer target, to_insert;
+
+				to_insert = _bst.findKey(_bst.getRoot(), value);
+				if (to_insert)
+					return (iterator(to_insert));
+				
+				target = hint.getNode();
+				to_insert = _bst.newNode(value);
+				value_compare value_comp;
+				
+				while (target->parent)
+				{
+					if (target == target->parent->left)
+					{
+						if (value_comp(*target->parent->data, value))
+							target = target->parent;
+						else
+							break;
+					}
+					else
+					{
+						if (value_comp(value, *target->parent->data))
+							target = target->parent;
+						else
+							break;
+					}
+				}
+				_bst.bstInsert(to_insert, target);
+				_size++;
+				return (iterator(to_insert));
+			}
+
+			template< class InputIt >
+			void insert( InputIt first, InputIt last )
+			{
+				while (first != last)
+				{
+					insert(*first);
+					first++;
+				}
 			}
 
 			void erase( iterator pos )
 			{
 				value_type *data_to_remove = pos.getNode()->data;
-				
 				_bst.remove(*data_to_remove);
 				_size--;
 			}
@@ -245,22 +289,9 @@ namespace ft {
 
 			void erase( iterator first, iterator last )
 			{
-				iterator next = first;
-				while (next != last)
-				{
-					next = first++;
-					erase(first);
-					first = next;
-				}
-			}
-
-			template< class InputIt >
-			void insert( InputIt first, InputIt last )
-			{
 				while (first != last)
 				{
-					insert(*first);
-					first++;
+					erase(first++);
 				}
 			}
 
