@@ -20,16 +20,17 @@ if [ $? != 0 ]
 		exit 1
 fi
 
-./ft_containers > out_ft
-./std_containers > out_std
+# The argument is used only by eval_main.cpp (provided by school) as seed
+./ft_containers 100 > out_ft
+./std_containers 100 > out_std
 
 echo -e "\n $YEL DIFF: FT_CONTAINERS -VS- STD_CONTAINERS $WHT"
 diff -y -W 200 out_ft out_std
 
 echo -e "\n $YEL EXECUTION TIMES: $WHT"
 echo -e "\n $BLU ft_containers $WHT"
-time ./ft_containers > out_ft
+time ./ft_containers 100 > out_ft
 echo -e "\n $BLU std_containers $WHT"
-time ./std_containers > out_std
+time ./std_containers 100 > out_std
 
 rm out_ft out_std

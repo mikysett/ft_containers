@@ -9,6 +9,7 @@ GRN	= \033[0;32m
 
 NAME	=	ft_containers
 
+# To use school main replace src/main.cpp with eval_main.cpp
 SRCS	:=	src/main.cpp \
 			src/test_utility.cpp \
 			src/test_vector.cpp \
@@ -36,7 +37,7 @@ DEPS	=	$(HEADERS)/ft_containers.hpp \
 
 CC		=	clang++
 
-CFLAGS	=	-Wall -Wextra -std=c++98 -g
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98 -O3
 INCLUDES	= -I $(HEADERS)
 
 RM		=	rm -f
@@ -65,13 +66,12 @@ re:			fclean all
 
 stdlib:		INCLUDES += -DSTDLIB
 stdlib:		NAME = std_containers
-stdlib:		CFLAGS = -Wall -Wextra -std=c++11
+stdlib:		CFLAGS = -Wall -Wextra -Werror -std=c++11
 stdlib:		clean
 stdlib:		all
 
 debug:		INCLUDES += -DDEBUG_MODE
-debug:		CFLAGS = -Wall -Wextra -g -fsanitize=address
-# debug:		CFLAGS = -Wall -Wextra -std=c++98 -g -fsanitize=address
+debug:		CFLAGS = -Wall -Wextra -std=c++98 -g -fsanitize=address
 debug:		clean
 debug:		all
 

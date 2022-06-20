@@ -80,12 +80,12 @@ namespace ft
 
         reference operator*() const
         {
-            return (*_node->data);
+            return (_node->data);
         }
 
         pointer operator->() const
         {
-            return (_node->data);
+            return (&_node->data);
         }
 
         BSTiterator &operator++()

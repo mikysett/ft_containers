@@ -19,16 +19,18 @@ namespace ft {
 	{
 		public:
 			class value_compare;
+			typedef Allocator allocator_type;
 		
 		private:
-			typedef BinarySearchTree<pair<const Key, T>, value_compare, Allocator> BinarySearchTree;
+			typedef typename allocator_type::template rebind<typename ft::BSTnode<
+				ft::pair<Key const, T> > >::other node_allocator_type;
+			typedef BinarySearchTree<pair<const Key, T>, value_compare, node_allocator_type> BinarySearchTree;
 		
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
 			typedef Compare key_compare;
 			typedef typename ft::pair<const Key, T> value_type;
-			typedef Allocator allocator_type;
 
 			typedef typename BinarySearchTree::iterator iterator;
 			typedef typename BinarySearchTree::const_iterator const_iterator;
@@ -43,13 +45,12 @@ namespace ft {
 
 			typedef typename iterator_traits<iterator>::difference_type difference_type;
 
-
 			typedef typename BinarySearchTree::node_pointer node_pointer;
 			
 			// Constructors
 			explicit map( const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type())
-				: _bst(BinarySearchTree(value_compare(comp), alloc))
+				: _bst(BinarySearchTree(value_compare(comp), _alloc))
 				, _comp(comp)
 				, _alloc(alloc)
 				, _size(0)
@@ -59,7 +60,7 @@ namespace ft {
 			map( InputIt first, InputIt last,
 				const Compare& comp = Compare(),
 				const Allocator& alloc = Allocator())
-				: _bst(BinarySearchTree(value_compare(comp), alloc))
+				: _bst(BinarySearchTree(value_compare(comp), _alloc))
 				, _comp(comp)
 				, _alloc(alloc)
 				, _size(0)
@@ -129,7 +130,7 @@ namespace ft {
 					_size++;
 					node = _bst.findKey(_bst.getRoot(), pair);
 				}
-				return ((*node->data).second);
+				return (node->data.second);
 			}
 
 
@@ -218,15 +219,6 @@ namespace ft {
 
 			iterator insert( iterator hint, const value_type& value )
 			{
-				// TODO implement it correctly, this is a hack
-				// return insert(value).first;
-				// std::cout << "iterator insert( iterator hint, const value_type& value )" << std::endl;
-				// _bst.insert(value, hint.getNode());
-				// _size++;
-				// return (iterator(_bst.findKey(_bst.getRoot(), value)));
-
-
-
 				node_pointer target, to_insert;
 
 				to_insert = _bst.findKey(_bst.getRoot(), value);
@@ -241,14 +233,14 @@ namespace ft {
 				{
 					if (target == target->parent->left)
 					{
-						if (value_comp(*target->parent->data, value))
+						if (value_comp(target->parent->data, value))
 							target = target->parent;
 						else
 							break;
 					}
 					else
 					{
-						if (value_comp(value, *target->parent->data))
+						if (value_comp(value, target->parent->data))
 							target = target->parent;
 						else
 							break;
@@ -271,8 +263,8 @@ namespace ft {
 
 			void erase( iterator pos )
 			{
-				value_type *data_to_remove = pos.getNode()->data;
-				_bst.remove(*data_to_remove);
+				value_type data_to_remove = pos.getNode()->data;
+				_bst.remove(data_to_remove);
 				_size--;
 			}
 
@@ -297,7 +289,6 @@ namespace ft {
 
 			void swap( map& other )
 			{
-				// TODO test it
 				size_type tmp_size;
 				node_pointer tmp_root, tmp_nil;
 

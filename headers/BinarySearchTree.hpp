@@ -38,17 +38,25 @@ namespace ft {
 		node_pointer _root;
 
 		BinarySearchTree()
-			: _nil(new node())
-			, _root(_nil)
-		{};
+			: _nil(NULL)
+			, _root(NULL)
+		{
+			_nil = _alloc.allocate(1);
+			_alloc.construct(_nil, node(value_type(), NULL, NULL, NULL));
+			_root = _nil;
+		};
 
 		BinarySearchTree(const key_compare &comp,
 			const alloc_type &alloc = alloc_type())
 			: _comp(comp)
 			, _alloc(alloc)
-			, _nil(new node())
-			, _root(_nil)
-		{}
+			, _nil(NULL)
+			, _root(NULL)
+		{
+			_nil = _alloc.allocate(1);
+			_alloc.construct(_nil, node(value_type(), NULL, NULL, NULL));
+			_root = _nil;
+		}
 
 		BinarySearchTree(const BinarySearchTree &other)
 		{
@@ -58,7 +66,8 @@ namespace ft {
 		~BinarySearchTree()
 		{
 			clear();
-			delete(_nil);
+			_alloc.destroy(_nil);
+			_alloc.deallocate(_nil, 1);
 		}
 
 		BinarySearchTree &operator=(const BinarySearchTree &other)
@@ -67,27 +76,25 @@ namespace ft {
 
 			_comp = other._comp;
 			_alloc = other._alloc;
-			_nil = new node();
+			_nil = _alloc.allocate(1);
+			_alloc.construct(_nil, node(value_type(), NULL, NULL, NULL));
 			_root = _nil;
 
 			node_pointer curr_node = other.start();
 			node_pointer last = other.last();
 
 			for ( ; curr_node != last ; curr_node = successor(curr_node))
-				insert(*curr_node->data);
+				insert(curr_node->data);
 			if (curr_node)
-				insert(*curr_node->data);
+				insert(curr_node->data);
 			return (*this);
 		}
 
 		node_pointer newNode(const value_type &key)
 		{
-			node_pointer new_node = new node(_alloc.allocate(1));
+			node_pointer new_node = _alloc.allocate(1);
 
-			_alloc.construct(new_node->data, key);
-			new_node->parent = 0;
-			new_node->left = _nil;
-			new_node->right = _nil;
+			_alloc.construct(new_node, node(key, NULL, _nil, _nil));
 			return (new_node);
 		}
 
@@ -143,17 +150,10 @@ namespace ft {
 			node_pointer curr_node = start;
 			node_pointer parent = NULL;
 
-			DEBUG(
-				std::cout << "-- bstInsert:" << std::endl;
-				std::cout << "---- BSTnode n    : ";
-				n->print();
-				std::cout << "---- BSTnode start: ";
-				start->print();
-			)
 			while (curr_node != _nil)
 			{
 				parent = curr_node;
-				if (_comp(*n->data, *curr_node->data))
+				if (_comp(n->data, curr_node->data))
 					curr_node = curr_node->left;
 				else
 					curr_node = curr_node->right;
@@ -162,7 +162,7 @@ namespace ft {
 			n->parent = parent;
 			if (!parent)
 				_root = n;
-			else if (_comp(*n->data, *parent->data))
+			else if (_comp(n->data, parent->data))
 			{
 				parent->left = n;
 
@@ -193,9 +193,9 @@ namespace ft {
 		{
 			while (start != _nil)
 			{
-				if (!(_comp(*start->data, key) || _comp(key, *start->data)))
+				if (!(_comp(start->data, key) || _comp(key, start->data)))
 					return start;
-				else if (_comp(*start->data, key))
+				else if (_comp(start->data, key))
 					start = start->right;
 				else
 					start = start->left;
@@ -221,9 +221,8 @@ namespace ft {
 
 		void freeNode(node_pointer node)
 		{
-			_alloc.destroy(node->data);
-			_alloc.deallocate(node->data, 1);
-			delete(node);
+			_alloc.destroy(node);
+			_alloc.deallocate(node, 1);
 		}
 
 		static node_pointer min(node_pointer node)
